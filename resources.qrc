@@ -1,0 +1,8 @@
+<RCC>
+    <qresource prefix="/images">
+        <file>freqtrade_logo.png</file>
+    </qresource>
+    <qresource prefix="/">
+        <file>freqtrade_icon.ico</file>
+    </qresource>
+</RCC>
