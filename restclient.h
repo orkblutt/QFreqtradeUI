@@ -79,6 +79,7 @@ signals:
     void statusSignal(QJsonDocument);
     void profitSignal(QJsonDocument);
     void historySignal(QJsonDocument);
+    void showConfigSignal(const QString);
 
 };
 

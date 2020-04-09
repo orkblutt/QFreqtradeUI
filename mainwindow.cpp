@@ -6,6 +6,7 @@
 #include <QMessageBox>
 #include "optionsdialog.h"
 #include "buydialog.h"
+#include "confviewerdialog.h"
 
 
 MainWindow::MainWindow(QWidget *parent)
@@ -29,6 +30,8 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tableViewBalance->setSortingEnabled(true);
     ui->tableViewBalance->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
+
+
     QJsonTableModel::Header headerPerf;
     headerPerf.push_back( QJsonTableModel::Heading( { {"title","Pair"},   {"index","pair"} }) );
     headerPerf.push_back( QJsonTableModel::Heading( { {"title","Profit"},    {"index","profit"} }) );
@@ -40,7 +43,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tableViewPerf->setModel(proxyPerfModel);
     ui->tableViewPerf->setSortingEnabled(true);
     ui->tableViewPerf->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-
 
     QJsonTableModel::Header headerStatus;
     headerStatus.push_back( QJsonTableModel::Heading( { {"title","ID"},   {"index","trade_id"} }) );
@@ -64,7 +66,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tableViewStatus->setModel(proxyStatusModel);
     ui->tableViewStatus->setSortingEnabled(true);
     ui->tableViewStatus->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-
 
     QJsonTableModel::Header headerHistory;
     headerHistory.push_back( QJsonTableModel::Heading({{"title","ID"},   {"index","trade_id"} }) );
@@ -94,11 +95,15 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tableViewTradesHistory->setSortingEnabled(true);
     ui->tableViewTradesHistory->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
 
+
     connect(&_client, SIGNAL(balanceSignal(QJsonDocument)), this, SLOT(onBalance(QJsonDocument)));
     connect(&_client, SIGNAL(performanceSignal(QJsonDocument)), this, SLOT(onPerformance(QJsonDocument)));
     connect(&_client, SIGNAL(statusSignal(QJsonDocument)), this, SLOT(onStatus(QJsonDocument)));
     connect(&_client, SIGNAL(profitSignal(QJsonDocument)), this, SLOT(onProfit(QJsonDocument)));
     connect(&_client, SIGNAL(historySignal(QJsonDocument)), this, SLOT(onHistory(QJsonDocument)));
+
+    connect(&_client, SIGNAL(showConfigSignal(const QString)), this, SLOT(onShowConfig(const QString)));
+
 
     _client.setURLPort(_settings->value("address").toString(), _settings->value("port").toInt());
     _client.setCredentials(_settings->value("username").toString(), _settings->value("password").toString());
@@ -155,6 +160,14 @@ void MainWindow::onHistory(QJsonDocument jDoc)
     QJsonObject obj = jDoc.object();
     QJsonDocument jdo(obj["trades"].toArray());
     _historyTableModel->setJson((jdo));
+}
+
+void MainWindow::onShowConfig(const QString conf)
+{
+    ConfViewerDialog* dlg = new ConfViewerDialog(conf);
+    dlg->exec();
+    delete dlg;
+
 }
 
 void MainWindow::onRefresh()
@@ -226,7 +239,6 @@ void MainWindow::on_pushButtonStop_pressed()
     if(!_oneClickCommand && !missClickProtection())
         return;
     _client.postStop();
-
 }
 
 void MainWindow::on_pushButtonStopbuy_pressed()
@@ -234,7 +246,6 @@ void MainWindow::on_pushButtonStopbuy_pressed()
     if(!_oneClickCommand && !missClickProtection())
         return;
     _client.postStopBuy();
-
 }
 
 void MainWindow::on_pushButtonReloadconf_pressed()
@@ -242,11 +253,17 @@ void MainWindow::on_pushButtonReloadconf_pressed()
     if(!_oneClickCommand && !missClickProtection())
         return;
     _client.postReloadConf();
-
 }
 
 void MainWindow::on_pushButtonForcesell_pressed()
 {
+    if(!_oneClickCommand && !missClickProtection())
+        return;
+
+    QModelIndex index = ui->tableViewStatus->currentIndex().siblingAtColumn(0);
+    int tradeId = index.data(Qt::DisplayRole).toInt();
+    if(tradeId != 0)
+        _client.postForceSell(tradeId);
 }
 
 void MainWindow::on_pushButtonForceSellAll_pressed()

@@ -44,6 +44,8 @@ public slots:
     void onProfit(QJsonDocument jDoc);
     void onHistory(QJsonDocument jDoc);
 
+    void onShowConfig(const QString conf);
+
     void onRefresh();
 
 private slots:

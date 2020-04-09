@@ -370,6 +370,7 @@ void restClient::replyShowConfig(QNetworkReply *reply)
     QByteArray data = reply->readAll();
     if(!data.isEmpty())
     {
-        qDebug() << data;
+
+        emit showConfigSignal(QJsonDocument::fromJson(data).toJson(QJsonDocument::Indented));
     }
 }

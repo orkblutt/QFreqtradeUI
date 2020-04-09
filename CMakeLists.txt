@@ -28,6 +28,9 @@ add_executable(freqtradeUI
     buydialog.cpp
     buydialog.h
     buydialog.ui
+    confviewerdialog.cpp
+    confviewerdialog.h
+    confviewerdialog.ui
     resources.qrc
     freqtrade.rc
   )
