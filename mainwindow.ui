@@ -127,7 +127,7 @@ QPushButton:hover{
           </property>
           <property name="sizeHint" stdset="0">
            <size>
-            <width>235</width>
+            <width>300</width>
             <height>20</height>
            </size>
           </property>
@@ -145,6 +145,26 @@ QPushButton:hover{
            <string>Profit: </string>
           </property>
          </widget>
+        </item>
+        <item>
+         <widget class="QLabel" name="labelTrendArrow">
+          <property name="text">
+           <string>no trend yet</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <spacer name="horizontalSpacer_2">
+          <property name="orientation">
+           <enum>Qt::Horizontal</enum>
+          </property>
+          <property name="sizeHint" stdset="0">
+           <size>
+            <width>20</width>
+            <height>20</height>
+           </size>
+          </property>
+         </spacer>
         </item>
         <item>
          <widget class="QLabel" name="label_bestPair">

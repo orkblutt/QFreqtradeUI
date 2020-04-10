@@ -10,8 +10,21 @@
     <height>404</height>
    </rect>
   </property>
+  <property name="contextMenuPolicy">
+   <enum>Qt::NoContextMenu</enum>
+  </property>
   <property name="windowTitle">
    <string>Config Viewer</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget {
+  color: white;
+  background-color:  black;
+}
+
+QTextEdit{
+  background-color: #454545;
+}</string>
   </property>
   <layout class="QGridLayout" name="gridLayout">
    <item row="0" column="0">

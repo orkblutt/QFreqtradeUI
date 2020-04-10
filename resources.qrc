@@ -1,6 +1,8 @@
 <RCC>
     <qresource prefix="/images">
         <file>freqtrade_logo.png</file>
+        <file>arrow_down.png</file>
+        <file>arrow_up.png</file>
     </qresource>
     <qresource prefix="/">
         <file>freqtrade_icon.ico</file>

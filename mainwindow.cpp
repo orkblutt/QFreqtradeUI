@@ -16,6 +16,7 @@ MainWindow::MainWindow(QWidget *parent)
     ui->setupUi(this);
 
     _settings = new QSettings(QString(QDir::currentPath() + QDir::separator() + "freqtradeui.ini"), QSettings::IniFormat);
+    _lastProfit = _settings->value("profit", 0.0).toDouble();
 
     QJsonTableModel::Header headerBalance;
     headerBalance.push_back( QJsonTableModel::Heading( { {"title","Currency"},   {"index","currency"} }) );
@@ -29,8 +30,6 @@ MainWindow::MainWindow(QWidget *parent)
     ui->tableViewBalance->setModel(proxyBalanceModel);
     ui->tableViewBalance->setSortingEnabled(true);
     ui->tableViewBalance->horizontalHeader()->setSectionResizeMode(QHeaderView::Stretch);
-
-
 
     QJsonTableModel::Header headerPerf;
     headerPerf.push_back( QJsonTableModel::Heading( { {"title","Pair"},   {"index","pair"} }) );
@@ -111,7 +110,7 @@ MainWindow::MainWindow(QWidget *parent)
     _oneClickCommand = _settings->value("one_click").toBool();
 
     connect(&_refreshTimer, SIGNAL(timeout()), this, SLOT(onRefresh()));
-    _refreshTimer.start(_settings->value("refresh_interval", 20).toInt() * 1000);
+    _refreshTimer.start(_settings->value("refresh_interval", 60).toInt() * 1000);
     onRefresh();
 }
 
@@ -150,9 +149,17 @@ void MainWindow::onStatus(QJsonDocument jDoc)
 void MainWindow::onProfit(QJsonDocument jDoc)
 {
     QJsonObject obj = jDoc.object();
+    double currentProfit = obj["profit_closed_percent"].toDouble();
     ui->label_bestPair->setText(QString("Best pair: %1 %2").arg(obj["best_pair"].toString()).arg(obj["best_rate"].toDouble()));
-    ui->label_profit->setText(QString("Profit: %1").arg(obj["profit_closed_percent"].toDouble()));
+    ui->label_profit->setText(QString("Profit: %1%").arg(currentProfit));
     ui->label_tradeCount->setText(QString("Trades count: %1").arg(obj["trade_count"].toInt()));
+
+    if(currentProfit != _lastProfit)
+    {
+        ui->label_profit->setPixmap(QPixmap(currentProfit > _lastProfit ? ":/images/arrow_up.png" : ":/images/arrow_down.png"));
+        _lastProfit = currentProfit;
+        _settings->setValue("profit", currentProfit);
+    }
 }
 
 void MainWindow::onHistory(QJsonDocument jDoc)

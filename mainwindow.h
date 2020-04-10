@@ -33,6 +33,8 @@ private:
 
     bool _oneClickCommand = false;
 
+    double _lastProfit = 0.0;
+
 
     bool missClickProtection();
 

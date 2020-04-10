@@ -101,7 +101,7 @@ QVariant QJsonTableModel::data( const QModelIndex &index, int role ) const
             if(obj["current_profit"].toDouble() <= 0)
                 return QVariant(QColor(Qt::red));
             else
-                return QVariant(QColor(Qt::green));
+                return QVariant(QColor(30,200,30));
 
         }
         else if(obj.contains("profit"))
@@ -109,14 +109,14 @@ QVariant QJsonTableModel::data( const QModelIndex &index, int role ) const
             if(obj["profit"].toDouble() <= 0)
                 return QVariant(QColor(Qt::red));
             else
-                return QVariant(QColor(Qt::green));
+                return QVariant(QColor(30,200,30));
         }
         else if(obj.contains("close_profit"))
         {
             if(obj["close_profit"].toDouble() <= 0)
                 return QVariant(QColor(Qt::red));
             else
-                return QVariant(QColor(Qt::green));
+                return QVariant(QColor(30,200,30));
         }
         return QVariant();
     }
