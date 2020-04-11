@@ -11,6 +11,10 @@ This GUI uses the freqtrade's REST API to monitor your trades and to use command
 
 Use the "Options" button to specify the connection settins to your bo and the refresh frequency (default is 60 seconds).
 
+## Note
+
+Actually "Trade history" table will be populate only if you are on freqtrade develop branch  https://github.com/freqtrade/freqtrade/tree/develop . Should be available soon on master.
+
 ## Donation
 
 Please make a donation to see new features like multibot support, trend status, start/stop automation...
