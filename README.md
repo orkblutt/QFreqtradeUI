@@ -13,7 +13,7 @@ Use the "Options" button to specify the connection settins to your bo and the re
 
 ## Note
 
-Actually "Trade history" table will be populate only if you are on freqtrade develop branch  https://github.com/freqtrade/freqtrade/tree/develop . Should be available soon on master.
+Actually "Trade history" table will be populated only if you are on freqtrade develop branch  https://github.com/freqtrade/freqtrade/tree/develop . Should be available soon on master.
 
 ## Donation
 
