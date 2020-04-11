@@ -34,7 +34,6 @@ QGroupBox {
 }
 
 QGroupBox::title {
-    background-color:  transparent;
     subcontrol-origin: margin;
     subcontrol-position: top left; /* position at the top center */
     background-color: #30303000;
@@ -80,6 +79,7 @@ QPushButton {
   font: 30 14pt &quot;tahoma&quot;;
   border-style: no-border;
   font-size: 14px;
+border-radius: 4px;
  }
 
 QPushButton:pressed{
@@ -199,6 +199,18 @@ QPushButton:hover{
         </item>
         <item>
          <widget class="QPushButton" name="pushButtonOptions">
+          <property name="sizePolicy">
+           <sizepolicy hsizetype="Minimum" vsizetype="Fixed">
+            <horstretch>0</horstretch>
+            <verstretch>0</verstretch>
+           </sizepolicy>
+          </property>
+          <property name="maximumSize">
+           <size>
+            <width>100</width>
+            <height>37</height>
+           </size>
+          </property>
           <property name="text">
            <string>Options</string>
           </property>
