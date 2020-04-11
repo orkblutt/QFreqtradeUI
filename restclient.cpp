@@ -143,23 +143,25 @@ void restClient::postReloadConf()
 void restClient::postForceSell(const int id)
 {
     QUrl url(QString("%1%2%3").arg(_url).arg(FT_RESTAPI_ROOT).arg(FT_RESTAPI_FORCE_SELL));
-    QUrlQuery qquery;
-    qquery.addQueryItem("symbol", QString::number(id));
+    QByteArray jsonString = QString("{\"tradeid\":\"%1\"}").arg(id).toUtf8();
     QNetworkRequest netReq;
     netReq.setUrl(url);
     netReq.setRawHeader("Authorization", _authHelper);
-    _netMngrForceSell->post(netReq, qquery.toString(QUrl::FullyEncoded).toUtf8());
+    netReq.setRawHeader("Content-Type", "application/json");
+    netReq.setRawHeader("Content-Length", QByteArray::number(jsonString.size()));
+    _netMngrForceSell->post(netReq, jsonString);
 }
 
 void restClient::postForceSellAll()
 {
     QUrl url(QString("%1%2%3").arg(_url).arg(FT_RESTAPI_ROOT).arg(FT_RESTAPI_FORCE_SELL));
-    QUrlQuery qquery;
-    qquery.addQueryItem("symbol", "all");
+    QByteArray jsonString = QString("{\"tradeid\":\"all\"}").toUtf8();
     QNetworkRequest netReq;
     netReq.setUrl(url);
     netReq.setRawHeader("Authorization", _authHelper);
-    _netMngrForceSell->post(netReq, qquery.toString(QUrl::FullyEncoded).toUtf8());
+    netReq.setRawHeader("Content-Type", "application/json");
+    netReq.setRawHeader("Content-Length", QByteArray::number(jsonString.size()));
+    _netMngrForceSell->post(netReq, jsonString);
 }
 
 void restClient::postForceBuy(const QString &pair, double amount)
@@ -169,6 +171,8 @@ void restClient::postForceBuy(const QString &pair, double amount)
     QNetworkRequest netReq;
     netReq.setUrl(url);
     netReq.setRawHeader("Authorization", _authHelper);
+    netReq.setRawHeader("Content-Type", "application/json");
+    netReq.setRawHeader("Content-Length", QByteArray::number(jsonString.size()));
     _netMngrForceBuy->post(netReq, jsonString);
 }
 
