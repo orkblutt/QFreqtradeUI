@@ -17,6 +17,9 @@ MainWindow::MainWindow(QWidget *parent)
 
     _settings = new QSettings(QString(QDir::currentPath() + QDir::separator() + "freqtradeui.ini"), QSettings::IniFormat);
     _lastProfit = _settings->value("profit", 0.0).toDouble();
+    _oneClickCommand = _settings->value("one_click").toBool();
+    _client.setURLPort(_settings->value("address").toString(), _settings->value("port").toInt());
+    _client.setCredentials(_settings->value("username").toString(), _settings->value("password").toString());
 
     QJsonTableModel::Header headerBalance;
     headerBalance.push_back( QJsonTableModel::Heading( { {"title","Currency"},   {"index","currency"} }) );
@@ -100,14 +103,8 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&_client, SIGNAL(statusSignal(QJsonDocument)), this, SLOT(onStatus(QJsonDocument)));
     connect(&_client, SIGNAL(profitSignal(QJsonDocument)), this, SLOT(onProfit(QJsonDocument)));
     connect(&_client, SIGNAL(historySignal(QJsonDocument)), this, SLOT(onHistory(QJsonDocument)));
-
     connect(&_client, SIGNAL(showConfigSignal(const QString)), this, SLOT(onShowConfig(const QString)));
 
-
-    _client.setURLPort(_settings->value("address").toString(), _settings->value("port").toInt());
-    _client.setCredentials(_settings->value("username").toString(), _settings->value("password").toString());
-
-    _oneClickCommand = _settings->value("one_click").toBool();
 
     connect(&_refreshTimer, SIGNAL(timeout()), this, SLOT(onRefresh()));
     _refreshTimer.start(_settings->value("refresh_interval", 60).toInt() * 1000);
@@ -156,7 +153,7 @@ void MainWindow::onProfit(QJsonDocument jDoc)
 
     if(currentProfit != _lastProfit)
     {
-        ui->label_profit->setPixmap(QPixmap(currentProfit > _lastProfit ? ":/images/arrow_up.png" : ":/images/arrow_down.png"));
+        ui->labelTrendArrow->setPixmap(QPixmap(currentProfit > _lastProfit ? ":/images/arrow_up.png" : ":/images/arrow_down.png"));
         _lastProfit = currentProfit;
         _settings->setValue("profit", currentProfit);
     }

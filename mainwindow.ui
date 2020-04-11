@@ -53,6 +53,10 @@ QLineEdit {
  border-radius: 4px;
  }
 
+QTableView#tableViewBalance{
+gridline-color: gray;
+}
+
 QTextEdit {
   border: 2px solid gray;
   border-radius: 4px;
