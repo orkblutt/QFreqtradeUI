@@ -16,17 +16,17 @@
   <property name="styleSheet">
    <string notr="true">QWidget {
   color: white;
-  background-color:  black;
+  background-color:  #303030;
 }
 
 QLabel{
-  background-color: black;
+  background-color:  #303030;
   color: white;
   font: 30 12pt &quot;tahoma&quot;;	
 }
 
 QGroupBox {
-    background-color: black;
+    background-color:  #303030;
     border: 2px solid gray;
     border-radius: 5px;
     margin-top: 2ex; /* leave space at the top for the title */
@@ -34,9 +34,10 @@ QGroupBox {
 }
 
 QGroupBox::title {
+    background-color:  transparent;
     subcontrol-origin: margin;
     subcontrol-position: top left; /* position at the top center */
-    background-color: black;
+    background-color: #30303000;
 	
 }
 
@@ -68,14 +69,14 @@ QComboBox {
 }
 
 QHeaderView::section {
-  background-color: #454545;
+  background-color: #555555;
 }
 
 QPushButton {
   padding: 10px;
   color: white;
   text-align: center;
-  background-color:#1010ee;
+  background-color:#05668D;
   font: 30 14pt &quot;tahoma&quot;;
   border-style: no-border;
   font-size: 14px;
@@ -87,7 +88,7 @@ QPushButton:pressed{
 }
 
 QPushButton:hover{
- background-color: #5252d9;
+ background-color: #028090;
  padding-left: 5px; 
 }
 </string>
